@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mybatis.demo.mapper.UserMapper">
+
+    <select id="selectUser" resultType="User">
+        select *
+        from user
+        where user_id = #{userId}
+    </select>
+
+    <!-- 对于MySQL这样有自增主键的数据库，可以直接使用如下的方式 -->
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="userId" keyColumn="user_id">
+        insert into user(user_name, age, score)
+        values (#{userName}, #{age}, #{score})
+    </insert>
+
+    <!-- 对于Oracle，由于没有自增主键，可以使用如下的方式获取主键的值 -->
+    <insert id="insertUser" databaseId="oracle" useGeneratedKeys="true">
+        <selectKey keyColumn="user_id" keyProperty="userId" resultType="int" order="BEFORE">
+            SELECT USER_ID.nextval as id from dual
+        </selectKey>
+        insert into user(user_id, user_name, age) values(#{userId}, #{userName}, #{age})
+    </insert>
+
+    <!-- update的时候，只更新不为null的字段 -->
+    <update id="updateUser">
+        UPDATE user
+        <set>
+            <if test="user.userName != null">user_name = #{user.userName},</if>
+            <if test="user.age != null">age = #{user.age},</if>
+            <if test="user.score != null">score = #{user.score},</if>
+        </set>
+        WHERE user_id = #{userId}
+    </update>
+
+    <insert id="batchUpsert">
+        INSERT INTO user(user_id, user_name, age, score) VALUES
+        <foreach collection="users" item="user" separator=",">
+            (#{user.userId}, #{user.userName}, #{user.age}, #{user.score})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        <trim suffixOverrides=",">
+            <if test="user.userName != null">user_name = VALUES(user_name),</if>
+            <if test="user.age != null">age = VALUES(age),</if>
+            <if test="user.score != null">score = VALUES(score),</if>
+        </trim>
+    </insert>
+
+<!--    <select id="selectUserLikeName" resultType="User">-->
+<!--        <bind name="pattern" value="'%' + _parameter + '%'"/>-->
+<!--        SELECT * FROM user-->
+<!--        WHERE user_name LIKE #{pattern}-->
+<!--    </select>-->
+
+</mapper>

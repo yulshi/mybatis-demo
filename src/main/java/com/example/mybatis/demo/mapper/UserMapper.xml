@@ -11,7 +11,7 @@
     </select>
 
     <!-- 对于MySQL这样有自增主键的数据库，可以直接使用如下的方式 -->
-    <insert id="insertUser" useGeneratedKeys="true" keyProperty="userId" keyColumn="user_id">
+    <insert id="insertUser" useGeneratedKeys="true" databaseId="mysql" keyProperty="userId" keyColumn="user_id">
         insert into user(user_name, age, score)
         values (#{userName}, #{age}, #{score})
     </insert>

@@ -60,16 +60,16 @@ public interface UserMapper {
      * 在MySQL中使用如下的SQL语句可以达到批量upsert的功能，在PG中使用另外的一种SQL，下面的方式
      * 并不能忽略null值的传入字段，请参考UserMapper.xml文件
      */
-    //    @Insert({
-    //            "<script>",
-    //            "  INSERT INTO user(user_id, user_name, age, score) VALUES",
-    //            "  <foreach item='user' collection='users' separator=','>",
-    //            "    (#{user.userId}, #{user.userName}, #{user.age}, #{user.score})",
-    //            "  </foreach>",
-    //            "  ON DUPLICATE KEY UPDATE",
-    //            "    user_name=VALUES(user_name), age=VALUES(age), score=VALUES(score)",
-    //            "</script>"
-    //    })
+//    @Insert({
+//            "<script>",
+//            "  INSERT INTO user(user_id, user_name, age, score) VALUES",
+//            "  <foreach item='user' collection='users' separator=','>",
+//            "    (#{user.userId}, #{user.userName}, #{user.age}, #{user.score})",
+//            "  </foreach>",
+//            "  ON DUPLICATE KEY UPDATE",
+//            "    user_name=VALUES(user_name), age=VALUES(age), score=VALUES(score)",
+//            "</script>"
+//    })
     Integer batchUpsert(@Param("users") List<User> users);
 
     /**

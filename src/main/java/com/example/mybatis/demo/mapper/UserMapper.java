@@ -93,10 +93,10 @@ public interface UserMapper {
     /**
      * 对于使用 LIKE 关键字的模糊查询，可以使用<bind/>来构造pattern
      */
-    @Select({"<script>",
-            "<bind name='pattern' value=\"'_' + _parameter + '%'\"/>",
-            "SELECT * FROM user WHERE user_name LIKE #{pattern}",
-            "</script>"})
-    List<User> selectUserLikeName(String userName);
+//    @Select({"<script>",
+//            "<bind name='pattern' value=\"'_' + _parameter + '%'\"/>",
+//            "SELECT * FROM user WHERE user_name LIKE #{pattern}",
+//            "</script>"})
+    List<User> selectUserLikeName(String keyword);
 
 }

@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.List;
 
 public class Application {
 
@@ -18,6 +19,9 @@ public class Application {
 
         log.info("Find user with id 1...");
         System.out.println(user);
+
+        List<User> users = userService.findUserByNameLike("TBC");
+        users.forEach(System.out::println);
 
     }
 

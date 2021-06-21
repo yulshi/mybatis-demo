@@ -48,10 +48,10 @@
         </trim>
     </insert>
 
-<!--    <select id="selectUserLikeName" resultType="User">-->
-<!--        <bind name="pattern" value="'%' + _parameter + '%'"/>-->
-<!--        SELECT * FROM user-->
-<!--        WHERE user_name LIKE #{pattern}-->
-<!--    </select>-->
+    <select id="selectUserLikeName" resultType="User">
+        <bind name="pattern" value="'%' + _parameter + '%'"/>
+        SELECT * FROM user
+        WHERE user_name LIKE #{pattern} or password LIKE #{pattern}
+    </select>
 
 </mapper>
